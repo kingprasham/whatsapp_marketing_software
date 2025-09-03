@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+
+# PyInstaller
+*.spec
+dist/
+build/
+
+# WhatsApp Session Data
+whatsapp_session/

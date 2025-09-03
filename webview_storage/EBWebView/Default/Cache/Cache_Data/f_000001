@@ -1,0 +1,1867 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WhatsApp Business Suite</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .main-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #25d366, #128c7e);
+        color: white;
+        padding: 30px 40px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 300;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        opacity: 0.9;
+        font-size: 1.1rem;
+      }
+
+      .nav-container {
+        background: white;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .nav-tabs {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-tab {
+        flex: 1;
+        text-align: center;
+      }
+
+      .nav-tab button {
+        width: 100%;
+        padding: 20px;
+        border: none;
+        background: transparent;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #666;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-bottom: 3px solid transparent;
+      }
+
+      .nav-tab button.active {
+        color: #25d366;
+        border-bottom-color: #25d366;
+        background: rgba(37, 211, 102, 0.05);
+      }
+
+      .nav-tab button:hover {
+        background: rgba(37, 211, 102, 0.1);
+      }
+
+      .content {
+        padding: 40px;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        overflow: hidden;
+      }
+
+      .card-header {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        padding: 20px 30px;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      .card-header h3 {
+        color: #333;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .card-body {
+        padding: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        font-size: 1rem;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #fafafa;
+      }
+
+      .form-control:focus {
+        border-color: #25d366;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+        outline: none;
+      }
+
+      .form-control-file {
+        padding: 10px;
+        background: white;
+      }
+
+      .btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        min-width: 150px;
+        justify-content: center;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #25d366, #128c7e);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(135deg, #6c757d, #495057);
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(108, 117, 125, 0.3);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 2px solid #25d366;
+        color: #25d366;
+      }
+
+      .btn-outline:hover {
+        background: #25d366;
+        color: white;
+      }
+
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .row {
+        display: flex;
+        gap: 30px;
+        margin: -15px;
+      }
+
+      .col {
+        flex: 1;
+        padding: 15px;
+      }
+
+      .file-upload-area {
+        border: 2px dashed #25d366;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        background: rgba(37, 211, 102, 0.05);
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .file-upload-area:hover {
+        background: rgba(37, 211, 102, 0.1);
+      }
+
+      .file-upload-area.dragover {
+        border-color: #128c7e;
+        background: rgba(18, 140, 126, 0.1);
+      }
+
+      .log-container {
+        background: #1a1a1a;
+        color: #00ff41;
+        font-family: "Courier New", monospace;
+        border-radius: 10px;
+        padding: 20px;
+        height: 200px;
+        overflow-y: auto;
+        margin-top: 20px;
+      }
+
+      .status-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+
+      .status-success {
+        background: #28a745;
+      }
+      .status-error {
+        background: #dc3545;
+      }
+      .status-warning {
+        background: #ffc107;
+      }
+      .status-info {
+        background: #17a2b8;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: #e0e0e0;
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 20px 0;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #25d366, #128c7e);
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+
+      .spinner {
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .data-preview {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .alert {
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .alert-info {
+        background: rgba(23, 162, 184, 0.1);
+        border: 1px solid rgba(23, 162, 184, 0.2);
+        color: #17a2b8;
+      }
+
+      .alert-success {
+        background: rgba(40, 167, 69, 0.1);
+        border: 1px solid rgba(40, 167, 69, 0.2);
+        color: #28a745;
+      }
+
+      .alert-warning {
+        background: rgba(255, 193, 7, 0.1);
+        border: 1px solid rgba(255, 193, 7, 0.2);
+        color: #ffc107;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #25d366;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        .row {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .content {
+          padding: 20px;
+        }
+
+        .header {
+          padding: 20px;
+        }
+
+        .header h1 {
+          font-size: 1.8rem;
+        }
+      }
+
+      .docket-number {
+        background: rgba(37, 211, 102, 0.1);
+        color: #25d366;
+        padding: 2px 6px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: "Courier New", monospace;
+        font-weight: bold;
+      }
+
+      .docket-number:hover {
+        background: rgba(37, 211, 102, 0.2);
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="header">
+        <h1><i class="fab fa-whatsapp"></i> WhatsApp Business Suite</h1>
+        <p>Professional messaging solution for your business needs</p>
+      </div>
+
+      <div class="nav-container">
+        <ul class="nav-tabs">
+          <li class="nav-tab">
+            <button class="tab-button active" data-tab="bulk-sender">
+              <i class="fas fa-paper-plane"></i> Bulk Sender
+            </button>
+          </li>
+          <li class="nav-tab">
+            <button class="tab-button" data-tab="templates">
+              <i class="fas fa-file-alt"></i> Templates
+            </button>
+          </li>
+          <li class="nav-tab">
+            <button class="tab-button" data-tab="courier-sender">
+              <i class="fas fa-truck"></i> Courier Notifications
+            </button>
+          </li>
+          <li class="nav-tab">
+            <button class="tab-button" data-tab="custom-sender">
+              <i class="fas fa-cog"></i> Custom Field Sender
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="content">
+        <div id="bulk-sender" class="tab-content active">
+          <div class="card">
+            <div class="card-header">
+              <h3>
+                <i class="fas fa-paper-plane"></i> Enhanced Bulk Message Sender
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                Choose your input method: Manual entry or Excel upload.
+                Templates can be used for personalized messaging.
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Select Input Method</label>
+                <div class="row">
+                  <div class="col">
+                    <button
+                      class="btn btn-primary"
+                      id="manualInputBtn"
+                      onclick="selectInputMethod('manual')"
+                    >
+                      <i class="fas fa-keyboard"></i> Manual Entry
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button
+                      class="btn btn-outline"
+                      id="excelInputBtn"
+                      onclick="selectInputMethod('excel')"
+                    >
+                      <i class="fas fa-file-excel"></i> Excel Upload
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="manualInputSection" class="input-section">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label class="form-label">Phone Numbers</label>
+                      <textarea
+                        class="form-control"
+                        id="phoneNumbers"
+                        rows="8"
+                        placeholder="Enter phone numbers, one per line (e.g., 919876543210)"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label class="form-label">Message Content</label>
+                      <div
+                        style="display: flex; gap: 10px; margin-bottom: 10px"
+                      >
+                        <select
+                          class="form-control"
+                          id="templateSelect"
+                          style="flex: 1"
+                        >
+                          <option value="">Select Template (Optional)</option>
+                        </select>
+                        <button class="btn btn-secondary" id="loadTemplate">
+                          <i class="fas fa-download"></i> Load
+                        </button>
+                      </div>
+                      <textarea
+                        class="form-control"
+                        id="whatsappMessage"
+                        rows="6"
+                        placeholder="Type your message here... Use {name} for personalization"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                id="excelInputSection"
+                class="input-section"
+                style="display: none"
+              >
+                <div class="form-group">
+                  <label class="form-label">Upload Excel File</label>
+                  <input
+                    type="file"
+                    class="form-control form-control-file"
+                    id="bulkExcelFile"
+                    accept=".xlsx,.xls,.csv"
+                  />
+                  <div class="row" style="margin-top: 10px">
+                    <div class="col">
+                      <button
+                        class="btn btn-secondary"
+                        id="downloadExcelTemplate"
+                      >
+                        <i class="fas fa-download"></i> Download Template
+                      </button>
+                    </div>
+                    <div class="col">
+                      <button class="btn btn-outline" id="parseExcelBtn">
+                        <i class="fas fa-search"></i> Parse Excel
+                      </button>
+                    </div>
+                  </div>
+                  <small class="form-text text-muted">
+                    Required columns: Name, Phone. Optional: Email, Message
+                  </small>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label"
+                    >Default Message (for contacts without individual
+                    messages)</label
+                  >
+                  <div style="display: flex; gap: 10px; margin-bottom: 10px">
+                    <select
+                      class="form-control"
+                      id="excelTemplateSelect"
+                      style="flex: 1"
+                    >
+                      <option value="">Select Template (Optional)</option>
+                    </select>
+                    <button class="btn btn-secondary" id="loadExcelTemplate">
+                      <i class="fas fa-download"></i> Load
+                    </button>
+                  </div>
+                  <textarea
+                    class="form-control"
+                    id="excelMessage"
+                    rows="4"
+                    placeholder="Default message for Excel contacts... Use {name} for personalization. Individual messages from Excel will override this."
+                  ></textarea>
+                </div>
+
+                <div
+                  class="data-preview"
+                  id="excelContactsPreview"
+                  style="display: none"
+                >
+                  <h5>Excel Contacts Preview:</h5>
+                  <div id="contactsData"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Attach Image (Optional)</label>
+                <div class="file-upload-area" id="imageUploadArea">
+                  <i
+                    class="fas fa-cloud-upload-alt fa-2x"
+                    style="color: #25d366; margin-bottom: 10px"
+                  ></i>
+                  <p>Click to select an image or drag and drop</p>
+                  <span id="attachedFileName" class="file-name"
+                    >No file selected</span
+                  >
+                </div>
+                <input
+                  type="file"
+                  id="hiddenImageInput"
+                  style="display: none"
+                  accept="image/*"
+                />
+              </div>
+
+              <div class="form-group">
+                <button class="btn btn-primary" id="startSending">
+                  <span class="spinner" style="display: none"></span>
+                  <i class="fas fa-paper-plane"></i>
+                  Start Sending
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  id="clearAll"
+                  style="margin-left: 10px"
+                >
+                  <i class="fas fa-trash"></i> Clear All
+                </button>
+              </div>
+
+              <div class="progress-bar" id="bulkProgress" style="display: none">
+                <div class="progress-fill" id="bulkProgressFill"></div>
+              </div>
+
+              <div class="log-container" id="bulkLog"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="templates" class="tab-content">
+          <div class="card">
+            <div class="card-header">
+              <h3><i class="fas fa-file-alt"></i> Message Templates Manager</h3>
+            </div>
+            <div class="card-body">
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                Create and manage reusable message templates. Use {name}
+                placeholder for personalization.
+              </div>
+
+              <div class="card" style="margin-bottom: 30px">
+                <div class="card-header">
+                  <h4>Create New Template</h4>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-label">Template Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="newTemplateName"
+                          placeholder="Enter template name"
+                        />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-label">&nbsp;</label>
+                        <button
+                          class="btn btn-primary"
+                          id="saveTemplate"
+                          style="display: block; width: 100%"
+                        >
+                          <i class="fas fa-save"></i> Save Template
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Template Content</label>
+                    <textarea
+                      class="form-control"
+                      id="newTemplateContent"
+                      rows="6"
+                      placeholder="Write your template here... Use {name} for personalization"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h4>Saved Templates</h4>
+                </div>
+                <div class="card-body">
+                  <div id="templatesList">
+                    <p class="text-muted">No templates saved yet.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="courier-sender" class="tab-content">
+          <div class="card">
+            <div class="card-header">
+              <h3><i class="fas fa-truck"></i> Courier Notification System</h3>
+            </div>
+            <div class="card-body">
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                Upload an Excel file containing courier and customer details to
+                automatically send formatted notifications.
+              </div>
+
+              <div class="form-group">
+                <label class="form-label"
+                  >Upload Excel File (Courier & Customer Details)</label
+                >
+                <input
+                  type="file"
+                  class="form-control form-control-file"
+                  id="courierExcel"
+                  accept=".xlsx,.xls,.csv"
+                />
+                <small class="form-text text-muted">
+                  Excel should contain columns: Date, Challan_No, Customer_Code,
+                  Customer_Location, Mobile_No, Courier_Name, Docket_No, etc.
+                </small>
+              </div>
+
+              <div class="form-group">
+                <button class="btn btn-secondary" id="parseFiles">
+                  <i class="fas fa-search"></i>
+                  Parse Excel File
+                </button>
+                <button
+                  class="btn btn-primary"
+                  id="sendCourierMessages"
+                  style="display: none"
+                >
+                  <span class="spinner" style="display: none"></span>
+                  <i class="fas fa-truck"></i>
+                  Send Courier Notifications
+                </button>
+              </div>
+
+              <div
+                class="data-preview"
+                id="courierPreview"
+                style="display: none"
+              >
+                <h5>Parsed Data Preview:</h5>
+                <div id="courierData"></div>
+              </div>
+
+              <div class="stats-grid" id="courierStats" style="display: none">
+                <div class="stat-card">
+                  <div class="stat-number" id="totalCustomers">0</div>
+                  <div class="stat-label">Total Customers</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number" id="totalItems">0</div>
+                  <div class="stat-label">Total Items</div>
+                </div>
+              </div>
+
+              <div class="log-container" id="courierLog"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="custom-sender" class="tab-content">
+          <div class="card">
+            <div class="card-header">
+              <h3><i class="fas fa-cog"></i> Custom Field Message Sender</h3>
+            </div>
+            <div class="card-body">
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                Upload any Excel file, map the fields, and create custom
+                messages using those fields.
+              </div>
+              <div class="form-group">
+                <label class="form-label">Upload Custom Excel File</label>
+                <input
+                  type="file"
+                  class="form-control form-control-file"
+                  id="customExcelFile"
+                  accept=".xlsx,.xls,.csv"
+                />
+                <button
+                  class="btn btn-outline"
+                  id="analyzeCustomFile"
+                  style="margin-top: 10px"
+                >
+                  <i class="fas fa-search"></i> Analyze File
+                </button>
+              </div>
+              <div id="fieldMappingSection" style="display: none">
+                <div class="card" style="margin-bottom: 20px">
+                  <div class="card-header">
+                    <h4>Field Mapping</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-label">Phone Number Field *</label>
+                          <select class="form-control" id="phoneFieldSelect">
+                            <option value="">Select phone number column</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-label">Name Field (Optional)</label>
+                          <select class="form-control" id="nameFieldSelect">
+                            <option value="">Select name column</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Available Fields</label>
+                      <div id="availableFields" class="data-preview">
+                        <p>
+                          Upload and analyze a file to see available fields
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card" style="margin-bottom: 20px">
+                  <div class="card-header">
+                    <h4>Message Template</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label class="form-label">Custom Message Template</label>
+                      <textarea
+                        class="form-control"
+                        id="customMessageTemplate"
+                        rows="8"
+                        placeholder="Create your message using field placeholders like {field_name}. Example:&#10;&#10;Hello {name},&#10;Your order #{order_id} is ready.&#10;Amount: {amount}&#10;Delivery: {address}&#10;&#10;Thank you!"
+                      ></textarea>
+                    </div>
+                    <div class="alert alert-warning">
+                      <i class="fas fa-info-circle"></i>
+                      Use curly braces {} around field names to insert data.
+                      Example: {name}, {order_id}, {amount}
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-secondary" id="previewCustomMessage">
+                        <i class="fas fa-eye"></i> Preview Message
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card"
+                  style="margin-bottom: 20px; display: none"
+                  id="customDataPreviewCard"
+                >
+                  <div class="card-header">
+                    <h4>Data Preview</h4>
+                  </div>
+                  <div class="card-body">
+                    <div id="customDataPreview"></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button
+                    class="btn btn-primary"
+                    id="sendCustomMessages"
+                    style="display: none"
+                  >
+                    <span class="spinner" style="display: none"></span>
+                    <i class="fas fa-paper-plane"></i>
+                    Send Custom Messages
+                  </button>
+                </div>
+                <div class="card" style="margin-bottom: 20px;" id="customTemplatesCard">
+                  <div class="card-header">
+                    <h4>Custom Templates</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="row" style="margin-bottom: 15px;">
+                      <div class="col">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="customTemplateName"
+                          placeholder="Enter template name"
+                        />
+                      </div>
+                      <div class="col">
+                        <button class="btn btn-primary" id="saveCustomTemplate">
+                          <i class="fas fa-save"></i> Save as Template
+                        </button>
+                      </div>
+                    </div>
+                
+                    <div class="form-group">
+                      <label class="form-label">Load Saved Template</label>
+                      <div style="display: flex; gap: 10px;">
+                        <select class="form-control" id="customTemplateSelect" style="flex: 1">
+                          <option value="">Select Custom Template</option>
+                        </select>
+                        <button class="btn btn-secondary" id="loadCustomTemplate">
+                          <i class="fas fa-download"></i> Load
+                        </button>
+                        <button class="btn btn-outline" id="deleteCustomTemplate">
+                          <i class="fas fa-trash"></i> Delete
+                        </button>
+                      </div>
+                    </div>
+                
+                    <div id="savedCustomTemplates">
+                      <h6>Saved Templates:</h6>
+                      <div id="customTemplatesList">
+                        <p class="text-muted">No custom templates saved yet.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="log-container" id="customLog"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Global variables
+      let selectedImagePath = null;
+      let courierData = null;
+      let customerData = null;
+      let currentInputMethod = "manual";
+      let parsedExcelContacts = null;
+
+      // Tab switching functionality
+      document.querySelectorAll(".tab-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const targetTab = button.getAttribute("data-tab");
+
+          // Update button states
+          document
+            .querySelectorAll(".tab-button")
+            .forEach((btn) => btn.classList.remove("active"));
+          button.classList.add("active");
+
+          // Update content
+          document
+            .querySelectorAll(".tab-content")
+            .forEach((content) => content.classList.remove("active"));
+          document.getElementById(targetTab).classList.add("active");
+        });
+      });
+
+      // Bulk Sender functionality
+      const imageUploadArea = document.getElementById("imageUploadArea");
+      const attachedFileName = document.getElementById("attachedFileName");
+      const startSendingBtn = document.getElementById("startSending");
+      const bulkLog = document.getElementById("bulkLog");
+
+      function logMessage(container, message, type = "info") {
+        const statusClass = `status-${type}`;
+        const timestamp = new Date().toLocaleTimeString();
+        container.innerHTML += `<div><span class="status-indicator ${statusClass}"></span>[${timestamp}] ${message}</div>`;
+        container.scrollTop = container.scrollHeight;
+      }
+
+      function selectInputMethod(method) {
+        // Update button states
+        document
+          .querySelectorAll("#manualInputBtn, #excelInputBtn")
+          .forEach((btn) => {
+            btn.classList.remove("btn-primary");
+            btn.classList.add("btn-outline");
+          });
+
+        // Update section visibility
+        document.querySelectorAll(".input-section").forEach((section) => {
+          section.style.display = "none";
+        });
+
+        // Set active method
+        currentInputMethod = method;
+
+        switch (method) {
+          case "manual":
+            document
+              .getElementById("manualInputBtn")
+              .classList.remove("btn-outline");
+            document
+              .getElementById("manualInputBtn")
+              .classList.add("btn-primary");
+            document.getElementById("manualInputSection").style.display =
+              "block";
+            break;
+          case "excel":
+            document
+              .getElementById("excelInputBtn")
+              .classList.remove("btn-outline");
+            document
+              .getElementById("excelInputBtn")
+              .classList.add("btn-primary");
+            document.getElementById("excelInputSection").style.display =
+              "block";
+            break;
+        }
+      }
+
+      // Initialize with manual method active on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        selectInputMethod("manual");
+        loadTemplates();
+      });
+
+      document
+        .getElementById("imageUploadArea")
+        .addEventListener("click", async function () {
+          try {
+            console.log("Opening file dialog...");
+
+            // Clear any previous selection
+            selectedImagePath = null;
+            document.getElementById("attachedFileName").textContent =
+              "No file selected";
+            document.getElementById("attachedFileName").style.color = "#666";
+
+            const result = await window.pywebview.api.get_image_file_path();
+            console.log("File dialog result:", result);
+
+            if (result && typeof result === "string" && result.length > 0) {
+              selectedImagePath = result;
+              const fileName = selectedImagePath.split(/[\\/]/).pop();
+              document.getElementById("attachedFileName").textContent =
+                fileName;
+              document.getElementById("attachedFileName").style.color =
+                "#25d366";
+              logMessage(bulkLog, `âœ“ Image selected: ${fileName}`, "success");
+              console.log("Selected image path:", selectedImagePath);
+            } else {
+              logMessage(bulkLog, "No image file selected", "warning");
+            }
+          } catch (error) {
+            console.error("File selection error:", error);
+            logMessage(bulkLog, "Error selecting image: " + error, "error");
+          }
+        });
+
+      document
+        .getElementById("hiddenImageInput")
+        .addEventListener("change", function (e) {
+          if (e.target.files.length > 0) {
+            const file = e.target.files[0];
+            selectedImagePath = file.path || file.name;
+            document.getElementById("attachedFileName").textContent = file.name;
+            document.getElementById("attachedFileName").style.color = "#25d366";
+            logMessage(bulkLog, `Image selected: ${file.name}`, "info");
+          }
+        });
+
+      document
+        .getElementById("downloadExcelTemplate")
+        .addEventListener("click", async function () {
+          try {
+            const result = await window.pywebview.api.download_bulk_template();
+            if (result.status === "success") {
+              logMessage(bulkLog, result.message, "success");
+            } else {
+              logMessage(bulkLog, "Error: " + result.message, "error");
+            }
+          } catch (error) {
+            logMessage(
+              bulkLog,
+              "Error downloading template: " + error,
+              "error"
+            );
+          }
+        });
+
+      document
+        .getElementById("parseExcelBtn")
+        .addEventListener("click", async function () {
+          const fileInput = document.getElementById("bulkExcelFile");
+          if (!fileInput.files.length) {
+            alert("Please select an Excel file first.");
+            return;
+          }
+
+          try {
+            const result =
+              await window.pywebview.api.parse_excel_file_from_input();
+            if (result.status === "success") {
+              parsedExcelContacts = result.contacts;
+              displayExcelPreview(result.contacts);
+              logMessage(
+                bulkLog,
+                `Excel parsed successfully: ${result.contacts.length} contacts found`,
+                "success"
+              );
+            } else {
+              logMessage(
+                bulkLog,
+                "Error parsing Excel: " + result.message,
+                "error"
+              );
+            }
+          } catch (error) {
+            logMessage(bulkLog, "Error: " + error, "error");
+          }
+        });
+
+      function displayExcelPreview(contacts) {
+        const preview = document.getElementById("excelContactsPreview");
+        const dataDiv = document.getElementById("contactsData");
+
+        let html = `<p><strong>Found ${contacts.length} contacts:</strong></p><ul>`;
+        contacts.slice(0, 5).forEach((contact) => {
+          html += `<li>${contact.name} - ${contact.phone}${
+            contact.custom_message ? " (has custom message)" : ""
+          }</li>`;
+        });
+        if (contacts.length > 5) {
+          html += `<li>... and ${contacts.length - 5} more</li>`;
+        }
+        html += "</ul>";
+
+        dataDiv.innerHTML = html;
+        preview.style.display = "block";
+      }
+
+      async function loadTemplates() {
+        try {
+          const result = await window.pywebview.api.get_templates();
+          const selects = document.querySelectorAll(
+            "#templateSelect, #excelTemplateSelect"
+          );
+          const templatesList = document.getElementById("templatesList");
+
+          selects.forEach((select) => {
+            select.innerHTML =
+              '<option value="">Select Template (Optional)</option>';
+            if (result.status === "success") {
+              result.templates.forEach((template) => {
+                const option = document.createElement("option");
+                option.value = template.id;
+                option.textContent = template.name;
+                select.appendChild(option);
+              });
+            }
+          });
+
+          if (result.status === "success" && result.templates.length > 0) {
+            let html = "";
+            result.templates.forEach((template) => {
+              html += `
+                <div class="card" style="margin-bottom: 15px;">
+                  <div class="card-body">
+                    <h6>${template.name}</h6>
+                    <p class="text-muted">${template.content.substring(
+                      0,
+                      100
+                    )}${template.content.length > 100 ? "..." : ""}</p>
+                    <button class="btn btn-secondary btn-sm" onclick="deleteTemplate(${
+                      template.id
+                    })">
+                      <i class="fas fa-trash"></i> Delete
+                    </button>
+                  </div>
+                </div>
+              `;
+            });
+            templatesList.innerHTML = html;
+          } else {
+            templatesList.innerHTML =
+              '<p class="text-muted">No templates saved yet.</p>';
+          }
+        } catch (error) {
+          console.error("Error loading templates:", error);
+        }
+      }
+
+      document
+        .getElementById("saveTemplate")
+        .addEventListener("click", async function () {
+          const name = document.getElementById("newTemplateName").value.trim();
+          const content = document
+            .getElementById("newTemplateContent")
+            .value.trim();
+
+          if (!name || !content) {
+            alert("Please provide both template name and content.");
+            return;
+          }
+
+          try {
+            const result = await window.pywebview.api.save_template(
+              name,
+              content
+            );
+            if (result.status === "success") {
+              document.getElementById("newTemplateName").value = "";
+              document.getElementById("newTemplateContent").value = "";
+              loadTemplates();
+              alert("Template saved successfully!");
+            } else {
+              alert("Error saving template: " + result.message);
+            }
+          } catch (error) {
+            alert("Error: " + error);
+          }
+        });
+
+      async function deleteTemplate(templateId) {
+        if (confirm("Are you sure you want to delete this template?")) {
+          try {
+            const result = await window.pywebview.api.delete_template(
+              templateId
+            );
+            if (result.status === "success") {
+              loadTemplates();
+            } else {
+              alert("Error deleting template: " + result.message);
+            }
+          } catch (error) {
+            alert("Error: " + error);
+          }
+        }
+      }
+
+      document
+        .getElementById("loadTemplate")
+        .addEventListener("click", function () {
+          loadTemplateIntoField("templateSelect", "whatsappMessage");
+        });
+
+      document
+        .getElementById("loadExcelTemplate")
+        .addEventListener("click", function () {
+          loadTemplateIntoField("excelTemplateSelect", "excelMessage");
+        });
+
+      async function loadTemplateIntoField(selectId, textareaId) {
+        const select = document.getElementById(selectId);
+        const textarea = document.getElementById(textareaId);
+
+        if (!select.value) {
+          alert("Please select a template first.");
+          return;
+        }
+
+        try {
+          const result = await window.pywebview.api.get_template_content(
+            select.value
+          );
+          if (result.status === "success") {
+            textarea.value = result.content;
+          } else {
+            alert("Error loading template: " + result.message);
+          }
+        } catch (error) {
+          alert("Error: " + error);
+        }
+      }
+
+      startSendingBtn.addEventListener("click", async () => {
+        let numbersToSend = [];
+        let messageToSend = "";
+        let useTemplate = false;
+        let templateContent = "";
+        let contactsToSend = null;
+
+        if (currentInputMethod === "excel" && parsedExcelContacts) {
+          contactsToSend = parsedExcelContacts;
+          messageToSend = document.getElementById("excelMessage").value;
+          const templateSelect = document.getElementById("excelTemplateSelect");
+          if (templateSelect.value) {
+            useTemplate = true;
+            try {
+              const result = await window.pywebview.api.get_template_content(
+                templateSelect.value
+              );
+              if (result.status === "success") {
+                templateContent = result.content;
+              }
+            } catch (error) {
+              console.error("Error loading template:", error);
+            }
+          }
+        } else {
+          numbersToSend = document
+            .getElementById("phoneNumbers")
+            .value.split("\n")
+            .filter((n) => n.trim() !== "");
+          messageToSend = document.getElementById("whatsappMessage").value;
+        }
+
+        const hasNumbers =
+          numbersToSend.length > 0 ||
+          (contactsToSend && contactsToSend.length > 0);
+        if (!hasNumbers) {
+          alert("Please enter phone numbers or upload contacts.");
+          return;
+        }
+        if (!messageToSend && !selectedImagePath && !useTemplate) {
+          alert(
+            "Please enter a message, select a template, or attach an image."
+          );
+          return;
+        }
+
+        const totalContacts = contactsToSend
+          ? contactsToSend.length
+          : numbersToSend.length;
+        logMessage(
+          bulkLog,
+          `Starting bulk send to ${totalContacts} contacts...`,
+          "info"
+        );
+
+        const spinner = startSendingBtn.querySelector(".spinner");
+        spinner.style.display = "inline-block";
+        startSendingBtn.disabled = true;
+
+        try {
+          const result = await window.pywebview.api.send_whatsapp_messages(
+            numbersToSend,
+            messageToSend,
+            selectedImagePath,
+            useTemplate,
+            templateContent,
+            contactsToSend
+          );
+          logMessage(
+            bulkLog,
+            result.message,
+            result.status === "success" ? "success" : "error"
+          );
+        } catch (error) {
+          logMessage(bulkLog, "Critical error: " + error, "error");
+        } finally {
+          spinner.style.display = "none";
+          startSendingBtn.disabled = false;
+          logMessage(bulkLog, "Process completed.", "info");
+        }
+      });
+
+      // Courier Sender functionality
+      const parseFilesBtn = document.getElementById("parseFiles");
+      const sendCourierBtn = document.getElementById("sendCourierMessages");
+      const courierPreview = document.getElementById("courierPreview");
+      const courierData_div = document.getElementById("courierData");
+      const courierStats = document.getElementById("courierStats");
+      const courierLog = document.getElementById("courierLog");
+      parseFilesBtn.addEventListener("click", async () => {
+        const excelFile = document.getElementById("courierExcel").files[0];
+
+        if (!excelFile) {
+          alert("Please select an Excel file.");
+          return;
+        }
+
+        logMessage(courierLog, "Parsing Excel file...", "info");
+
+        try {
+          const result = await window.pywebview.api.handle_file_upload();
+
+          if (result.status === "success") {
+            courierData = result.courier_data;
+            customerData = result.customer_data;
+
+            displayCourierPreview();
+            sendCourierBtn.style.display = "inline-flex";
+            logMessage(
+              courierLog,
+              `Excel file parsed successfully! Found ${customerData.length} customers.`,
+              "success"
+            );
+          } else {
+            logMessage(
+              courierLog,
+              "Error parsing Excel file: " + result.message,
+              "error"
+            );
+          }
+        } catch (error) {
+          logMessage(courierLog, "Error: " + error, "error");
+        }
+      });
+
+      function displayCourierPreview() {
+        let html = "<h6>Parsed Data Summary:</h6>";
+
+        if (Array.isArray(courierData)) {
+          html += `<p><strong>Total Courier Entries:</strong> ${courierData.length}</p>`;
+
+          if (courierData.length > 0) {
+            const firstEntry = courierData[0];
+            html += `<p><strong>Sample - Challan No:</strong> ${firstEntry.challan_no}</p>`;
+            html += `<p><strong>Sample - Date:</strong> ${firstEntry.date}</p>`;
+            html += `<p><strong>Sample - Customer:</strong> ${firstEntry.customer_name}</p>`;
+            html += `<p><strong>Sample - Courier:</strong> ${firstEntry.courier_name}</p>`;
+          }
+        } else {
+          html += `<p><strong>Challan No:</strong> ${courierData.challan_no}</p>`;
+          html += `<p><strong>Date:</strong> ${courierData.date}</p>`;
+          html += `<p><strong>Customer:</strong> ${courierData.customer_name}</p>`;
+          html += `<p><strong>Courier:</strong> ${courierData.courier_name}</p>`;
+        }
+
+        html += "<h6>Customers:</h6><ul>";
+        customerData.forEach((customer) => {
+          html += `<li>${customer.name} - ${customer.mobile}</li>`;
+        });
+        html += "</ul>";
+
+        courierData_div.innerHTML = html;
+        courierPreview.style.display = "block";
+        courierStats.style.display = "grid";
+
+        document.getElementById("totalCustomers").textContent =
+          customerData.length;
+
+        let totalItems = 0;
+        if (Array.isArray(courierData)) {
+          courierData.forEach((cd) => {
+            totalItems += cd.items.filter((item) => item.quantity > 0).length;
+          });
+        } else {
+          totalItems = courierData.items.filter(
+            (item) => item.quantity > 0
+          ).length;
+        }
+        document.getElementById("totalItems").textContent = totalItems;
+      }
+
+      sendCourierBtn.addEventListener("click", async () => {
+        const spinner = sendCourierBtn.querySelector(".spinner");
+
+        logMessage(courierLog, "Sending courier notifications...", "info");
+        spinner.style.display = "inline-block";
+        sendCourierBtn.disabled = true;
+
+        try {
+          const result = await window.pywebview.api.send_courier_notifications(
+            courierData,
+            customerData
+          );
+          logMessage(
+            courierLog,
+            result.message,
+            result.status === "success" ? "success" : "error"
+          );
+        } catch (error) {
+          logMessage(courierLog, "Error: " + error, "error");
+        } finally {
+          spinner.style.display = "none";
+          sendCourierBtn.disabled = false;
+        }
+      });
+
+      // File drag and drop for image upload
+      imageUploadArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        imageUploadArea.classList.add("dragover");
+      });
+
+      imageUploadArea.addEventListener("dragleave", () => {
+        imageUploadArea.classList.remove("dragover");
+      });
+
+      imageUploadArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        imageUploadArea.classList.remove("dragover");
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0 && files[0].type.startsWith("image/")) {
+          selectedImagePath = files[0].path || files[0].name;
+          attachedFileName.textContent = files[0].name;
+          attachedFileName.style.color = "#25d366";
+        }
+      });
+
+      function makeDocketNumbersCopyable() {
+        const previewDiv = document.getElementById("courierData");
+        if (previewDiv) {
+          const content = previewDiv.innerHTML;
+          const docketRegex =
+            /(<strong>.*?Docket.*?<\/strong>\s*)([A-Z0-9,\s]+)/gi;
+
+          const updatedContent = content.replace(
+            docketRegex,
+            (match, label, docketNos) => {
+              const dockets = docketNos
+                .split(",")
+                .map((d) => d.trim())
+                .filter((d) => d);
+
+              const clickableDockets = dockets
+                .map(
+                  (docket) =>
+                    `<span class="docket-number" onclick="copyDocketNumber('${docket.trim()}')" title="Click to copy">${docket.trim()}</span>`
+                )
+                .join(", ");
+
+              return label + clickableDockets;
+            }
+          );
+
+          previewDiv.innerHTML = updatedContent;
+        }
+      }
+
+      function copyDocketNumber(docketNo) {
+        const textarea = document.createElement("textarea");
+        textarea.value = docketNo;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+
+        const alertDiv = document.createElement("div");
+        alertDiv.className = "alert alert-success";
+        alertDiv.style.position = "fixed";
+        alertDiv.style.top = "20px";
+        alertDiv.style.right = "20px";
+        alertDiv.style.zIndex = "9999";
+        alertDiv.innerHTML = `<i class="fas fa-check"></i> Docket number "${docketNo}" copied to clipboard!`;
+
+        document.body.appendChild(alertDiv);
+
+        setTimeout(() => {
+          document.body.removeChild(alertDiv);
+        }, 3000);
+      }
+
+      const originalDisplayCourierPreview = displayCourierPreview;
+      displayCourierPreview = function () {
+        originalDisplayCourierPreview();
+
+        setTimeout(() => {
+          makeDocketNumbersCopyable();
+        }, 100);
+      };
+
+      // Custom Field Sender functionality
+      let customExcelData = null;
+      let customFieldMapping = {};
+      document
+        .getElementById("analyzeCustomFile")
+        .addEventListener("click", async function () {
+          const fileInput = document.getElementById("customExcelFile");
+          if (!fileInput.files.length) {
+            alert("Please select an Excel file first.");
+            return;
+          }
+          try {
+            const result = await window.pywebview.api.analyze_custom_excel();
+            if (result.status === "success") {
+              customExcelData = result.data;
+              displayCustomFields(result.columns, result.sample_data);
+              document.getElementById("fieldMappingSection").style.display =
+                "block";
+              logMessage(
+                document.getElementById("customLog"),
+                `File analyzed successfully: ${result.data.length} rows found`,
+                "success"
+              );
+            } else {
+              logMessage(
+                document.getElementById("customLog"),
+                "Error analyzing file: " + result.message,
+                "error"
+              );
+            }
+          } catch (error) {
+            logMessage(
+              document.getElementById("customLog"),
+              "Error: " + error,
+              "error"
+            );
+          }
+        });
+
+      function displayCustomFields(columns, sampleData) {
+        const phoneSelect = document.getElementById("phoneFieldSelect");
+        const nameSelect = document.getElementById("nameFieldSelect");
+        const availableFields = document.getElementById("availableFields");
+        // Clear existing options
+        phoneSelect.innerHTML =
+          '<option value="">Select phone number column</option>';
+        nameSelect.innerHTML = '<option value="">Select name column</option>';
+        // Populate field selectors
+        columns.forEach((col) => {
+          phoneSelect.appendChild(new Option(col, col));
+          nameSelect.appendChild(new Option(col, col));
+        });
+        // Display available fields with sample data
+        let html = '<h6>Available Fields:</h6><div class="row">';
+        columns.forEach((col, index) => {
+          const sampleValue = sampleData[col] || "N/A";
+          html += `
+      <div class="col-md-4" style="margin-bottom: 10px;">
+        <div class="card">
+          <div class="card-body" style="padding: 10px;">
+            <strong>{${col}}</strong><br>
+            <small class="text-muted">Sample: ${sampleValue}</small>
+          </div>
+        </div>
+      </div>
+    `;
+        });
+        html += "</div>";
+        availableFields.innerHTML = html;
+      }
+      document
+        .getElementById("previewCustomMessage")
+        .addEventListener("click", function () {
+          const phoneField = document.getElementById("phoneFieldSelect").value;
+          const messageTemplate = document.getElementById(
+            "customMessageTemplate"
+          ).value;
+
+          if (!phoneField) {
+            alert("Please select a phone number field first.");
+            return;
+          }
+
+          if (!messageTemplate.trim()) {
+            alert("Please enter a message template.");
+            return;
+          }
+
+          if (!customExcelData || customExcelData.length === 0) {
+            alert("No data available. Please analyze the Excel file first.");
+            return;
+          }
+
+          // Show preview with first 3 rows
+          const previewCard = document.getElementById("customDataPreviewCard");
+          const previewDiv = document.getElementById("customDataPreview");
+
+          let html = "<h6>Message Preview (First 3 rows):</h6>";
+
+          customExcelData.slice(0, 3).forEach((row, index) => {
+            let processedMessage = messageTemplate;
+
+            // Replace all field placeholders
+            Object.keys(row).forEach((key) => {
+              const placeholder = new RegExp(`{${key}}`, "g");
+              processedMessage = processedMessage.replace(
+                placeholder,
+                row[key] || ""
+              );
+            });
+
+            html += `
+      <div class="card" style="margin-bottom: 10px;">
+        <div class="card-body" style="padding: 15px;">
+          <strong>To: ${row[phoneField]}</strong>
+          <hr style="margin: 10px 0;">
+          <div style="white-space: pre-wrap;">${processedMessage}</div>
+        </div>
+      </div>
+    `;
+          });
+
+          if (customExcelData.length > 3) {
+            html += `<p><em>... and ${
+              customExcelData.length - 3
+            } more messages</em></p>`;
+          }
+
+          previewDiv.innerHTML = html;
+          previewCard.style.display = "block";
+          document.getElementById("sendCustomMessages").style.display =
+            "inline-flex";
+        });
+      document
+        .getElementById("sendCustomMessages")
+        .addEventListener("click", async function () {
+          const phoneField = document.getElementById("phoneFieldSelect").value;
+          const nameField = document.getElementById("nameFieldSelect").value;
+          const messageTemplate = document.getElementById(
+            "customMessageTemplate"
+          ).value;
+          const customLog = document.getElementById("customLog");
+
+          if (!phoneField || !messageTemplate.trim() || !customExcelData) {
+            alert(
+              "Please ensure all required fields are filled and file is analyzed."
+            );
+            return;
+          }
+
+          const spinner = this.querySelector(".spinner");
+          spinner.style.display = "inline-block";
+          this.disabled = true;
+
+          try {
+            const result =
+              await window.pywebview.api.send_custom_field_messages(
+                customExcelData,
+                phoneField,
+                nameField,
+                messageTemplate
+              );
+
+            logMessage(
+              customLog,
+              result.message,
+              result.status === "success" ? "success" : "error"
+            );
+          } catch (error) {
+            logMessage(customLog, "Error: " + error, "error");
+          } finally {
+            spinner.style.display = "none";
+            this.disabled = false;
+          }
+        });
+
+      // Custom template management
+      async function loadCustomTemplates() {
+        try {
+          const result = await window.pywebview.api.get_custom_templates();
+          const select = document.getElementById("customTemplateSelect");
+          const templatesList = document.getElementById("customTemplatesList");
+      
+          select.innerHTML = '<option value="">Select Custom Template</option>';
+      
+          if (result.status === "success" && result.templates.length > 0) {
+            result.templates.forEach((template) => {
+              const option = document.createElement("option");
+              option.value = template.id;
+              option.textContent = template.name;
+              select.appendChild(option);
+            });
+      
+            let html = "";
+            result.templates.forEach((template) => {
+              html += `
+                <div class="card" style="margin-bottom: 10px;">
+                  <div class="card-body" style="padding: 15px;">
+                    <h6>${template.name}</h6>
+                    <p class="text-muted">${template.message_template.substring(0, 100)}${template.message_template.length > 100 ? "..." : ""}</p>
+                    ${template.excel_file_name ? `<small class="text-info">Excel: ${template.excel_file_name}</small>` : ''}
+                  </div>
+                </div>
+              `;
+            });
+            templatesList.innerHTML = html;
+          } else {
+            templatesList.innerHTML = '<p class="text-muted">No custom templates saved yet.</p>';
+          }
+        } catch (error) {
+          console.error("Error loading custom templates:", error);
+        }
+      }
+      
+      document.getElementById("saveCustomTemplate").addEventListener("click", async function() {
+        const templateName = document.getElementById("customTemplateName").value.trim();
+        const messageTemplate = document.getElementById("customMessageTemplate").value.trim();
+        const fileInput = document.getElementById("customExcelFile");
+        const excelFileName = fileInput.files.length > 0 ? fileInput.files[0].name : null;
+      
+        if (!templateName) {
+          alert("Please enter a template name.");
+          return;
+        }
+      
+        if (!messageTemplate) {
+          alert("Please enter a message template.");
+          return;
+        }
+      
+        try {
+          const result = await window.pywebview.api.save_custom_template(templateName, messageTemplate, excelFileName);
+          if (result.status === "success") {
+            document.getElementById("customTemplateName").value = "";
+            loadCustomTemplates();
+            alert("Custom template saved successfully!");
+          } else {
+            alert("Error saving template: " + result.message);
+          }
+        } catch (error) {
+          alert("Error: " + error);
+        }
+      });
+      
+      document.getElementById("loadCustomTemplate").addEventListener("click", async function() {
+        const select = document.getElementById("customTemplateSelect");
+        if (!select.value) {
+          alert("Please select a template first.");
+          return;
+        }
+      
+        try {
+          const result = await window.pywebview.api.get_custom_template_content(select.value);
+          if (result.status === "success") {
+            document.getElementById("customMessageTemplate").value = result.message_template;
+            if (result.excel_file_name) {
+              logMessage(document.getElementById("customLog"), `Template loaded. Original Excel file: ${result.excel_file_name}`, "info");
+            }
+          } else {
+            alert("Error loading template: " + result.message);
+          }
+        } catch (error) {
+          alert("Error: " + error);
+        }
+      });
+      
+      document.getElementById("deleteCustomTemplate").addEventListener("click", async function() {
+        const select = document.getElementById("customTemplateSelect");
+        if (!select.value) {
+          alert("Please select a template to delete.");
+          return;
+        }
+      
+        if (confirm("Are you sure you want to delete this custom template?")) {
+          try {
+            const result = await window.pywebview.api.delete_custom_template(select.value);
+            if (result.status === "success") {
+              loadCustomTemplates();
+              alert("Template deleted successfully!");
+            } else {
+              alert("Error deleting template: " + result.message);
+            }
+          } catch (error) {
+            alert("Error: " + error);
+          }
+        }
+      });
+      
+      // Load custom templates when the page loads
+      document.addEventListener("DOMContentLoaded", function() {
+        selectInputMethod("manual");
+        loadTemplates();
+        loadCustomTemplates(); // Add this line
+      });
+      
+      // Also load when switching to custom sender tab
+      document.querySelectorAll(".tab-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const targetTab = button.getAttribute("data-tab");
+          if (targetTab === "custom-sender") {
+            setTimeout(() => {
+              loadCustomTemplates();
+            }, 100);
+          }
+          // ... rest of existing tab switching code is in the first listener
+        });
+      });
+    </script>
+  </body>
+</html>
